@@ -31,4 +31,4 @@ jobs:
           OPENCODE_API_KEY: ${{ secrets.OPENCODE_API_KEY }}
         with:
           model: opencode/big-pickle
-          prompt: Provide all responses and comments in Russian.
+#          prompt: Provide all responses and comments in Russian.
