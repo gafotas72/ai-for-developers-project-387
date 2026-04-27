@@ -32,7 +32,7 @@ public interface SlotRepository extends JpaRepository<Slot, Long> {
      * @param pageable pageable
      * @return page of slots
      */
-    @Query(value = "SELECT s.* FROM slots s INNER JOIN event_types e ON s.event_type_id = e.id WHERE e.user_id = :ownerId AND CAST(s.start_time AS DATE) >= CAST(:startDate AS DATE)", nativeQuery = true)
+    @Query(value = "SELECT s.* FROM slots s INNER JOIN event_types e ON s.event_type_id = e.id WHERE e.user_id = :ownerId AND s.start_time >= NOW()", nativeQuery = true)
     Page<Slot> findByOwnerIdAndDate(@Param("ownerId") Long ownerId, @Param("startDate") LocalDate startDate, Pageable pageable);
 
     /**
@@ -42,7 +42,7 @@ public interface SlotRepository extends JpaRepository<Slot, Long> {
      * @param startDate start date
      * @return list of slots
      */
-    @Query(value = "SELECT s.* FROM slots s INNER JOIN event_types e ON s.event_type_id = e.id WHERE e.user_id = :ownerId AND CAST(s.start_time AS DATE) >= CAST(:startDate AS DATE)", nativeQuery = true)
+    @Query(value = "SELECT s.* FROM slots s INNER JOIN event_types e ON s.event_type_id = e.id WHERE e.user_id = :ownerId AND s.start_time >= NOW()", nativeQuery = true)
     List<Slot> findByOwnerIdAndDate(@Param("ownerId") Long ownerId, @Param("startDate") LocalDate startDate);
 
     /**
