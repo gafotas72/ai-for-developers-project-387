@@ -1,0 +1,44 @@
+plugins {
+    id 'java'
+    id 'checkstyle'
+    id 'org.springframework.boot' version '3.4.1'
+    id 'io.spring.dependency-management' version '1.1.7'
+}
+
+ext {
+    set('lombokVersion', "1.18.36")
+    set('checkstyleVersion', "10.18.1")
+}
+
+java {
+    toolchain {
+        languageVersion = JavaLanguageVersion.of(17)
+    }
+}
+
+dependencies {
+    implementation 'org.springframework.boot:spring-boot-starter-web'
+    implementation 'org.springframework.boot:spring-boot-starter-data-jpa'
+    implementation 'com.h2database:h2'
+    implementation 'org.mapstruct:mapstruct:1.6.3'
+    annotationProcessor 'org.mapstruct:mapstruct-processor:1.6.3'
+    annotationProcessor 'org.projectlombok:lombok-mapstruct-binding:0.2.0'
+    compileOnly 'org.projectlombok:lombok:' + lombokVersion
+    annotationProcessor 'org.projectlombok:lombok:' + lombokVersion
+    testImplementation 'org.springframework.boot:spring-boot-starter-test'
+    checkstyle 'com.puppycrawl.tools:checkstyle:' + checkstyleVersion
+}
+
+tasks.withType(JavaCompile).configureEach {
+    options.compilerArgs += [
+        '-Amapstruct.defaultComponentModel=spring'
+    ]
+}
+
+checkstyle {
+    configFile = file('config/checkstyle/checkstyle.xml')
+}
+
+springBoot {
+    mainClass = 'com.appointments.backend.BackendApplication'
+}

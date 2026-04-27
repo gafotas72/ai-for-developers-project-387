@@ -1,0 +1,16 @@
+.gitignore
+.npmignore
+api.ts
+base.ts
+common.ts
+configuration.ts
+docs/DefaultApi.md
+docs/Error.md
+docs/EventType.md
+docs/Slot.md
+docs/SlotInfo.md
+docs/SlotState.md
+docs/User.md
+docs/UserRole.md
+git_push.sh
+index.ts

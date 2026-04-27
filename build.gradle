@@ -1,0 +1,22 @@
+//plugins {
+//    id 'checkstyle'
+//}
+
+allprojects {
+    group = 'com.appointments'
+    version = '1.0.0'
+}
+
+subprojects {
+//    apply plugin: 'java'
+//
+//    java {
+//        toolchain {
+//            languageVersion = JavaLanguageVersion.of(17)
+//        }
+//    }
+
+    repositories {
+        mavenCentral()
+    }
+}

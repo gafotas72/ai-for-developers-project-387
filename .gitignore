@@ -1,0 +1,9 @@
+# MacOS
+.DS_Store
+
+.idea/
+generated-code/
+prompts/
+.gradle/
+.playwright-mcp/
+build/

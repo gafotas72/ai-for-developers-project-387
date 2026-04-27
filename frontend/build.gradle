@@ -1,0 +1,31 @@
+plugins {
+    id 'base'
+}
+
+//def nodeVersion = System.getProperty('nodejs.version', '20.19.0')
+
+task installFrontend(type: Exec) {
+    workingDir "${project.projectDir}"
+    ignoreExitValue true
+
+    if (System.getProperty('os.name').toLowerCase().contains('windows')) {
+        commandLine 'npm.cmd', 'install'
+    } else {
+        commandLine 'npm', 'install'
+    }
+}
+
+task buildFrontend(type: Exec) {
+    workingDir "${project.projectDir}"
+    outputs.dir 'dist'
+    ignoreExitValue true
+    dependsOn installFrontend
+
+    if (System.getProperty('os.name').toLowerCase().contains('windows')) {
+        commandLine 'npm.cmd', 'run', 'build'
+    } else {
+        commandLine 'npm', 'run', 'build'
+    }
+}
+
+build.dependsOn buildFrontend
