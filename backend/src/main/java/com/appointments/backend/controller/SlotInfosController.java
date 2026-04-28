@@ -8,7 +8,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
-import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.List;
 
 /**
@@ -40,8 +40,8 @@ public class SlotInfosController {
     @GetMapping("/slot-infos")
     public ResponseEntity<List<SlotInfoDto>> listByOwner(
             @RequestParam(name = "owner_id") final Long ownerId,
-            @RequestParam(name = "start_time") @DateTimeFormat(iso = DateTimeFormat.ISO.DATE)
-                    final LocalDate startTime,
+            @RequestParam(name = "start_time") @DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME)
+                    final LocalDateTime startTime,
             @RequestParam(required = false) final Integer limit,
             @RequestParam(required = false) final Integer offset) {
         int page = (offset != null) ? offset : 0;

@@ -90,7 +90,7 @@ public class SlotService {
      */
     public List<SlotDto> listByOwner(
             final Long ownerId,
-            final LocalDate startTime,
+            final LocalDateTime startTime,
             final Pageable pageable) {
         Page<Slot> slots = slotRepository.findByOwnerIdAndDate(ownerId, startTime, pageable);
         return slots.map(slotMapper::toDto).toList();
