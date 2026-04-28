@@ -1,0 +1,51 @@
+name: lighthouse
+
+on:
+  schedule:
+    - cron: "0 9 * * 1"
+  workflow_dispatch:
+
+jobs:
+  lighthouse:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v6
+
+      - name: Setup Java
+        uses: actions/setup-java@v4
+        with:
+          java-version: '17'
+          distribution: 'temurin'
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+
+      - name: Build project
+        run: ./gradlew build -x test -x checkstyleMain -x checkstyleTest
+
+      - name: Start backend
+        run: |
+          cd backend
+          nohup ../gradlew bootRun > /tmp/backend.log 2>&1 &
+          echo $!
+        shell: bash
+
+      - name: Wait for backend
+        run: sleep 20
+
+      - name: Start frontend
+        run: |
+          cd frontend
+          nohup node server/index.js > /tmp/frontend.log 2>&1 &
+          echo $!
+        shell: bash
+
+      - name: Wait for frontend
+        run: sleep 5
+
+      - name: Run Lighthouse on urls and validate with lighthouserc
+        uses: treosh/lighthouse-ci-action@v12
+        with:
+          urls: 'http://localhost:3000/'
