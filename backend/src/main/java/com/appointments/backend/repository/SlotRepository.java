@@ -7,6 +7,7 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.List;
 
 /**
@@ -28,22 +29,22 @@ public interface SlotRepository extends JpaRepository<Slot, Long> {
      * Find by owner id and date.
      *
      * @param ownerId owner id
-     * @param startDate start date
+     * @param startDate start date and time
      * @param pageable pageable
      * @return page of slots
      */
-    @Query(value = "SELECT s.* FROM slots s INNER JOIN event_types e ON s.event_type_id = e.id WHERE e.user_id = :ownerId AND CAST(s.start_time AS DATE) >= CAST(:startDate AS DATE)", nativeQuery = true)
-    Page<Slot> findByOwnerIdAndDate(@Param("ownerId") Long ownerId, @Param("startDate") LocalDate startDate, Pageable pageable);
+    @Query(value = "SELECT s.* FROM slots s INNER JOIN event_types e ON s.event_type_id = e.id WHERE e.user_id = :ownerId AND s.start_time >= CAST(:startDate AS TIMESTAMP)", nativeQuery = true)
+    Page<Slot> findByOwnerIdAndDate(@Param("ownerId") Long ownerId, @Param("startDate") LocalDateTime startDate, Pageable pageable);
 
     /**
      * Find by owner id and date.
      *
      * @param ownerId owner id
-     * @param startDate start date
+     * @param startDate start date and time
      * @return list of slots
      */
-    @Query(value = "SELECT s.* FROM slots s INNER JOIN event_types e ON s.event_type_id = e.id WHERE e.user_id = :ownerId AND CAST(s.start_time AS DATE) >= CAST(:startDate AS DATE)", nativeQuery = true)
-    List<Slot> findByOwnerIdAndDate(@Param("ownerId") Long ownerId, @Param("startDate") LocalDate startDate);
+    @Query(value = "SELECT s.* FROM slots s INNER JOIN event_types e ON s.event_type_id = e.id WHERE e.user_id = :ownerId AND s.start_time >= CAST(:startDate AS TIMESTAMP)", nativeQuery = true)
+    List<Slot> findByOwnerIdAndDate(@Param("ownerId") Long ownerId, @Param("startDate") LocalDateTime startDate);
 
     /**
      * Find by owner id and exact date.

@@ -11,7 +11,7 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.List;
 
 /**
@@ -51,7 +51,7 @@ public class SlotInfoService {
      */
     public List<SlotInfoDto> listByOwner(
             final Long ownerId,
-            final LocalDate startTime,
+            final LocalDateTime startTime,
             final Pageable pageable) {
         Page<Slot> slots = slotRepository.findByOwnerIdAndDate(ownerId, startTime, pageable);
         return slots.stream().map(slot -> {

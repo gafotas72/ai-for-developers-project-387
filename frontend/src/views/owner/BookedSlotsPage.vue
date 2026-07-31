@@ -77,18 +77,15 @@ function formatDateTime(isoString) {
   })
 }
 
-function getLocalDateString(date = new Date()) {
-  const year = date.getFullYear()
-  const month = String(date.getMonth() + 1).padStart(2, '0')
-  const day = String(date.getDate()).padStart(2, '0')
-  return `${year}-${month}-${day}`
+function getLocalDateTimeString(date = new Date()) {
+  return date.toISOString()
 }
 
 async function loadSlots() {
   if (!owner.value?.id) return
   loading.value = true
   try {
-    const now = getLocalDateString(new Date())
+    const now = getLocalDateTimeString(new Date())
     const offset = (currentPage.value - 1) * pageSize.value
     const response = await api.listByOwner(owner.value.id, now, pageSize.value, offset)
     slots.value = response.data
